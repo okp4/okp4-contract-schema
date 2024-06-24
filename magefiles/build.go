@@ -67,6 +67,16 @@ func (Build) Go(schema string) error {
 		return fmt.Errorf("failed to generate go types: %w", err)
 	}
 
+	fmt.Println("👨‍💻 Generate go client")
+	err = sh.Run("go-codegen", "generate",
+		"query-client",
+		filepath.Join(SCHEMA_DIR, fmt.Sprintf("%s.json", schema)),
+		"-o", filepath.Join(dest, "client.go"),
+		"--package-name", "schema")
+	if err != nil {
+		return fmt.Errorf("failed to generate go client: %w", err)
+	}
+
 	fmt.Println("🔨 Building go")
 	return runInPath(dest, "go", "build")
 }
