@@ -61,7 +61,7 @@ func (s Schema) Generate(ref string) error {
 
 	fmt.Println("🔨 Moving generated json schema")
 	if err := sh.Run("bash", "-c",
-		fmt.Sprintf("rsync -rmv --include='*/' --include='*/schema/raw/*.json' --exclude='*' %s/contracts/ %s/", CONTRACTS_TMP_DIR, SCHEMA_DIR)); err != nil {
+		fmt.Sprintf("rsync -rmv --include='*/' --include='*/schema/raw/*.json'  --include='*/schema/*.json' --exclude='*' %s/contracts/ %s/", CONTRACTS_TMP_DIR, SCHEMA_DIR)); err != nil {
 		return fmt.Errorf("failed to move generated json schema: %w", err)
 	}
 
