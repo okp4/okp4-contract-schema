@@ -122,3 +122,15 @@ func ensureYarn() {
 		panic("yarn is not installed")
 	}
 }
+
+// EnsureGoCodegen ensures that go-codegen is installed, if not it tries to install it.
+func ensureGoCodegen() {
+	if err := sh.Run("go-codegen", "--help"); err == nil {
+		return
+	}
+
+	fmt.Printf("🔨 Installing go-codegen...\n")
+	if err := sh.Run("go", "install", "github.com/srdtrk/go-codegen@0.2.5"); err != nil {
+		panic(fmt.Sprintf("failed to install go-codegen: %v", err))
+	}
+}
